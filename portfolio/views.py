@@ -41,8 +41,8 @@ def index(request):
             profile = Profile.objects.first()
             if profile and profile.email:
                 recipient_list.append(profile.email)
-            elif hasattr(settings, "DEFAULT_FROM_EMAIL"):
-                recipient_list.append(settings.DEFAULT_FROM_EMAIL)
+            elif hasattr(settings, "EMAIL_HOST_USER"):
+                recipient_list.append(settings.EMAIL_HOST_USER)
 
             if recipient_list:
                 try:
