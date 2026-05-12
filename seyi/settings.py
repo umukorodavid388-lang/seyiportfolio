@@ -124,10 +124,6 @@ STATIC_ROOT = BASE_DIR / "staticfiles"
 MEDIA_URL = 'media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
-# email configuration – console backend for development; replace with real SMTP in production
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-# if you plan to send from a fixed address, set DEFAULT_FROM_EMAIL or set PROFILE.email
-DEFAULT_FROM_EMAIL = 'webmaster@localhost'
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 
@@ -136,6 +132,20 @@ EMAIL_PORT = os.environ.get('EMAIL_PORT')
 EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
 EMAIL_USE_TLS = True
+
+
+
+# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+#
+# EMAIL_HOST = 'smtp.gmail.com'
+# EMAIL_PORT = 587
+# EMAIL_HOST_USER = 'oluwaseyioluwagbenga2001@gmail.com'
+# EMAIL_HOST_PASSWORD = 'nhpi edvy euak pixt'
+# EMAIL_USE_TLS = True
+#
+# DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+
+
 
 
 # Default primary key field type
