@@ -1,0 +1,147 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}{% endblock %}
+{% block content %}
+<main class="main">
+
+  <!-- Page Title -->
+  <div class="page-title light-background">
+    <div class="container">
+      <nav class="breadcrumbs">
+        <ol>
+          <li><a href="{% url 'index' %}">Home</a></li>
+          <li class="current">Service Details</li>
+        </ol>
+      </nav>
+      <h1>Service Details</h1>
+    </div>
+  </div><!-- End Page Title -->
+
+  <!-- Service Details Section -->
+  <section id="service-details" class="service-details section">
+
+    <div class="container" data-aos="fade-up" data-aos-delay="100">
+
+      <div class="row">
+
+        <div class="col-lg-4 order-lg-2">
+
+          <div class="sticky-sidebar">
+
+            <div class="service-card" data-aos="fade-left" data-aos-delay="200">
+              <div class="card-header">
+                <div class="service-icon">
+                  <i class="{{ service.icon_class }}"></i>
+                </div>
+                <h3>{{ service.title }}</h3>
+                {% if service.parent %}
+                <p class="service-tagline">{{ service.parent.title }}</p>
+                {% endif %}
+              </div>
+              <div class="card-body">
+                {% if service.starting_price %}
+                <div class="price-tag">
+                  <span class="label">Starting at</span>
+                  <span class="price">${{ service.starting_price }}</span>
+                </div>
+                {% endif %}
+                <ul class="quick-info">
+                  {% if service.delivery_time %}
+                  <li>
+                    <i class="bi bi-clock"></i>
+                    <span>{{ service.delivery_time }}</span>
+                  </li>
+                  {% endif %}
+                  {% if service.revisions %}
+                  <li>
+                    <i class="bi bi-arrow-repeat"></i>
+                    <span>{{ service.revisions }}</span>
+                  </li>
+                  {% endif %}
+                  {% if service.support_duration %}
+                  <li>
+                    <i class="bi bi-shield-check"></i>
+                    <span>{{ service.support_duration }}</span>
+                  </li>
+                  {% endif %}
+                </ul>
+                <div class="cta-buttons">
+                  <a href="#" class="btn-primary">Start Project</a>
+                  <a href="#" class="btn-secondary">Schedule Call</a>
+                </div>
+              </div>
+            </div>
+
+            <div class="contact-card" data-aos="fade-left" data-aos-delay="300">
+              <h4>Have Questions?</h4>
+              <p>Let's discuss your project requirements and how I can help.</p>
+              <div class="contact-methods">
+                {% if profile.email %}
+                <a href="mailto:{{ profile.email }}" class="contact-item">
+                  <i class="bi bi-envelope"></i>
+                  <span>{{ profile.email }}</span>
+                </a>
+                {% endif %}
+                {% if profile.phone %}
+                <a href="tel:{{ profile.phone }}" class="contact-item">
+                  <i class="bi bi-telephone"></i>
+                  <span>{{ profile.phone }}</span>
+                </a>
+                {% endif %}
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+
+        <div class="col-lg-8 order-lg-1">
+
+          <div class="service-overview" data-aos="fade-up" data-aos-delay="200">
+            <div class="overview-header">
+              <span class="badge">Premium Service</span>
+              <h2>{{ service.title }}</h2>
+            </div>
+            <p class="lead-text">{{ service.description }}</p>
+          </div>
+
+          <div class="features-grid" data-aos="fade-up" data-aos-delay="400">
+            <h3 class="section-heading">What You Get</h3>
+            <div class="row g-4">
+              {% for feature in customer %}
+              <div class="col-md-6">
+                <div class="feature-box">
+                  <div class="icon-wrapper">
+                    <i class="bi bi-layers"></i>
+                  </div>
+                  <h4>{{ feature.name }}</h4>
+                  <p>{{ feature.details }}</p>
+                </div>
+              </div>
+              {% endfor %}
+            </div>
+          </div>
+
+          <div class="tech-details" data-aos="fade-up" data-aos-delay="700">
+            <h3 class="section-heading">Technologies &amp; Tools</h3>
+            <div class="tech-categories">
+              <div class="tech-category">
+                <div class="tech-tags">
+                  {% for tech in tech %}
+                  <span>{{ tech.name }}</span>
+                  {% endfor %}
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </section><!-- /Service Details Section -->
+
+</main>
+{% endblock %}

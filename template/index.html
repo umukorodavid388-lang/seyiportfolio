@@ -1,0 +1,493 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}{% endblock %}
+{% block content %}
+<main class="main">
+
+  <!-- Hero Section -->
+  <section id="hero" class="hero section dark-background">4
+
+    {% if profile and profile.background %}
+    <img src="{{ profile.background.url }}" alt="" data-aos="fade-in">
+    {% else %}
+    <img src="{% static 'assets/img/profile/profile-bg-5.webp' %}" alt="" data-aos="fade-in">
+    {% endif %}
+
+    <div class="container" data-aos="fade-up" data-aos-delay="100">
+      <div class="row justify-content-center">
+        <div class="col-lg-8 text-center">
+          <h2>Hi, I'm {{ profile.name }}</h2>
+          <p>I'm a <span class="typed" data-typed-items="{{ profile.subtitle }}"></span><span class="typed-cursor"
+              aria-hidden="true"></span></p>
+          <div class="social-links">
+            <!-- static links for now; consider making a SocialLink model later -->
+            <a href="#"><i class="bi bi-twitter-x"></i></a>
+            <a href="#"><i class="bi bi-facebook"></i></a>
+            <a href="#"><i class="bi bi-instagram"></i></a>
+            <a href="#"><i class="bi bi-linkedin"></i></a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </section><!-- /Hero Section -->
+
+  <!-- About Section -->
+  <section id="about" class="about section">
+
+    <!-- Section Title -->
+    <div class="container section-title" data-aos="fade-up">
+      <span class="subtitle">About Me</span>
+      <h2>About Me</h2>
+      <p></p>
+    </div><!-- End Section Title -->
+
+    <div class="container" data-aos="fade-up" data-aos-delay="100">
+
+      <div class="row gy-5">
+        <div class="col-lg-4" data-aos="zoom-in" data-aos-delay="150">
+          <div class="profile-card">
+            <div class="profile-header">
+              <div class="profile-avatar">
+                {% if profile and profile.avatar %}
+                <img src="{{ profile.avatar.url }}" class="img-fluid" alt="">
+                {% else %}
+                <img src="{% static 'assets/img/ profile/profile-square-3.webp' %}" class="img-fluid" alt="">
+                {% endif %}n
+                <div class="status-indicator"></div>
+              </div>
+              <h3>{{ profile.name }}</h3>
+              <span class="role">{{ profile.role }}</span>
+            </div>
+
+            <div class="profile-stats">
+              <div class="stat-item">
+                <h4>{{ profile.years_experience }}</h4>
+                <p>Years</p>
+              </div>
+              <div class="stat-item">
+                <h4>{{ profile.awards_count }}</h4>
+                <p>Awards</p>
+              </div>
+            </div>
+
+            <div class="profile-actions">
+              {% if profile.cv %}
+              <a href="{{ profile.cv.url }}" class="btn-primary"><i class="bi bi-download"></i> Download CV</a>
+              {% endif %}
+              <a href="#contact" class="btn-secondary"><i class="bi bi-envelope"></i> Contact</a>
+            </div>
+
+            <div class="social-connect">
+              <!-- static links still; consider modelizing later -->
+              <a href="#"><i class="bi bi-linkedin"></i></a>
+              <a href="#"><i class="bi bi-github"></i></a>
+              <a href="#"><i class="bi bi-twitter"></i></a>
+              <a href="#"><i class="bi bi-instagram"></i></a>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-8" data-aos="fade-left" data-aos-delay="200">
+          <div class="content-wrapper">
+            <div class="bio-section">
+              <div class="section-tag">About Me</div>
+              <h2>{{ profile.about_title }}</h2>
+              <p>{{ profile.about_description }}</p>
+            </div>
+
+            <div class="details-grid">
+              {% for detail in details %}
+              <div class="detail-item" data-aos="fade-up" data-aos-delay="{{ forloop.counter0|add:1 }}00">
+                {% if detail.category == 'experience' %}
+                <i class="bi bi-briefcase"></i>
+                {% elif detail.category == 'degree' %}
+                <i class="bi bi-mortarboard"></i>
+                {% elif detail.category == 'location' %}
+                <i class="bi bi-geo-alt"></i>
+                {% elif detail.category == 'email' %}
+                <i class="bi bi-envelope"></i>
+                {% elif detail.category == 'phone' %}
+                <i class="bi bi-phone"></i>
+                {% elif detail.category == 'availability' %}
+                <i class="bi bi-calendar-check"></i>
+                {% else %}
+                <i class="bi bi-info-circle"></i>
+                {% endif %}
+                <div class="detail-content">
+                  <span>{{ detail.get_category_display }}</span>
+                  <strong>{{ detail.content }}</strong>
+                </div>
+              </div>
+              {% endfor %}
+            </div>
+
+            <div class="skills-showcase" data-aos="fade-up" data-aos-delay="250">
+              <div class="section-tag">Core Skills</div>
+              <h3>Technical Proficiency</h3>
+
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="skills-list skills-animation">
+                    {% for skill in skills|slice:":5" %}
+                    <div class="skill-item">
+                      <div class="skill-info">
+                        <span class="skill-name">{{ skill.name }}</span>
+                        <span class="skill-percent">{{ skill.percent }}%</span>
+                      </div>
+                      <div class="progress">
+                        <div class="progress-bar" role="progressbar" aria-valuenow="{{ skill.percent }}"
+                          aria-valuemin="0" aria-valuemax="100"></div>
+                      </div>
+                    </div>
+                    {% endfor %}
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="skills-list skills-animation">
+                    {% for skill in skills|slice:"5:" %}
+                    <div class="skill-item">
+                      <div class="skill-info">
+                        <span class="skill-name">{{ skill.name }}</span>
+                        <span class="skill-percent">{{ skill.percent }}%</span>
+                      </div>
+                      <div class="progress">
+                        <div class="progress-bar" role="progressbar" aria-valuenow="{{ skill.percent }}"
+                          aria-valuemin="0" aria-valuemax="100"></div>
+                      </div>
+                    </div>
+                    {% endfor %}
+
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+  </section><!-- /About Section -->
+
+  <!-- Resume Section -->
+  <section id="resume" class="resume section">
+
+    <!-- Section Title -->
+    <div class="container section-title" data-aos="fade-up">
+      <span class="subtitle">Resume</span>
+      <h2>Resume</h2>
+      <p>Necessitatibus eius consequatur ex aliquid fuga eum quidem sint consectetur velit. Sed ut perspiciatis unde
+        omnis iste natus error sit voluptatem accusantium doloremque laudantium totam rem aperiam</p>
+    </div><!-- End Section Title -->
+
+    <div class="container" data-aos="fade-up" data-aos-delay="100">
+
+      <div class="row gy-5">
+        <div class="col-lg-6">
+          <div class="experience-section">
+            <div class="section-header" data-aos="fade-right" data-aos-delay="200">
+              <div class="header-content">
+                <span class="section-badge">Experience</span>
+                <h2>Professional Journey</h2>
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod tempor incididunt ut labore et
+                  dolore magna aliqua.</p>
+              </div>
+            </div>
+
+            <div class="experience-cards">
+              {% for exp in experiences %}
+              <div class="exp-card{% if exp.featured %} featured{% endif %}" data-aos="zoom-in"
+                data-aos-delay="{{ forloop.counter0|add:3 }}00">
+                <div class="card-header">
+                  <div class="company-logo">
+                    <i class="bi bi-briefcase"></i>
+                  </div>
+                  {% if exp.featured %}
+                  <div class="period-badge">Current</div>
+                  {% endif %}
+                </div>
+                <div class="card-body">
+                  <h3>{{ exp.title }}</h3>
+                  <p class="company-name">{{ exp.company_name }}</p>
+                  <span class="duration">{{ exp.duration }}</span>
+                  <p class="description">{{ exp.description }}</p>
+                  {% if exp.skills_tags %}
+                  <div class="skills-tags">
+                    {% for tag in exp.skills_list %}
+                    <span class="skill-tag">{{ tag }}</span>
+                    {% endfor %}
+                  </div>
+                  {% endif %}
+                </div>
+              </div>
+              {% endfor %}
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-6">
+          <div class="education-section">
+            <div class="section-header" data-aos="fade-left" data-aos-delay="200">
+              <div class="header-content">
+                <span class="section-badge">Education</span>
+                <h2>Academic Background</h2>
+                <p>Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur
+                  vel illum.</p>
+              </div>
+            </div>
+
+            <div class="education-timeline" data-aos="fade-left" data-aos-delay="300">
+              <div class="timeline-track">
+                {% for edu in educations %}
+                <div class="timeline-item">
+                  <div class="timeline-marker">
+                    {% if edu.achievement_icon %}
+                    <i class="{{ edu.achievement_icon }}"></i>
+                    {% else %}
+                    <i class="bi bi-book"></i>
+                    {% endif %}
+                  </div>
+                  <div class="timeline-content">
+                    <div class="education-meta">
+                      <span class="year-range">{{ edu.year_range }}</span>
+                      <span class="degree-level">{{ edu.degree_level }}</span>
+                    </div>
+                    <h4>{{ edu.title }}</h4>
+                    <p class="institution">{{ edu.institution }}</p>
+                    <p class="description">{{ edu.description }}</p>
+                    {% if edu.achievement %}
+                    <div class="achievement">
+                      <i class="bi bi-award"></i>
+                      <span>{{ edu.achievement }}</span>
+                    </div>
+                    {% endif %}
+                  </div>
+                </div>
+                {% endfor %}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+  </section><!-- /Resume Section -->
+
+  <!-- Services Section -->
+  <section id="services" class="services section">
+
+    <!-- Section Title -->
+    <div class="container section-title" data-aos="fade-up">
+      <span class="subtitle">Services</span>
+      <h2>Services</h2>
+      <p>Necessitatibus eius consequatur ex aliquid fuga eum quidem sint consectetur velit. Sed ut perspiciatis unde
+        omnis iste natus error sit voluptatem accusantium doloremque laudantium totam rem aperiam</p>
+    </div><!-- End Section Title -->
+
+    <div class="container" data-aos="fade-up" data-aos-delay="100">
+
+      <div class="row gy-4">
+        {% for service in services %}
+        <div class="col-lg-3 col-md-6" data-aos="zoom-in" data-aos-delay="{{ forloop.counter0|add:1 }}00">
+          <div class="service-item{% if service.featured %} featured{% endif %}">
+            {% if service.featured %}
+            <div class="featured-tag">Featured</div>
+            {% endif %}
+            <div class="icon-wrapper">
+              <i class="{{ service.icon_class|default:'bi bi-briefcase' }}"></i>
+            </div>
+            <h4>{{ service.title }}</h4>
+            <p>{{ service.description }}</p>
+            <a href="{% url 'services_details' service.id %}" class="read-more">
+              <span>Explore</span>
+              <i class="bi bi-arrow-right"></i>
+            </a>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+
+  </section><!-- /Services Section -->
+
+  <!-- Portfolio Section -->
+  <section id="portfolio" class="portfolio section">
+
+    <!-- Section Title -->
+    <div class="container section-title" data-aos="fade-up">
+      <span class="subtitle">Portfolio</span>
+      <h2>Portfolio</h2>
+      <p>Necessitatibus eius consequatur ex aliquid fuga eum quidem sint consectetur velit. Sed ut perspiciatis unde
+        omnis iste natus error sit voluptatem accusantium doloremque laudantium totam rem aperiam</p>
+    </div><!-- End Section Title -->
+
+    <div class="container" data-aos="fade-up" data-aos-delay="100">
+
+      <div class="isotope-layout" data-default-filter="*" data-layout="masonry" data-sort="original-order">
+        <ul class="portfolio-filters isotope-filters" data-aos="fade-up" data-aos-delay="200">
+          <li data-filter="*" class="filter-active">All Work</li>
+          <li data-filter=".filter-solo">Solo</li>
+          <li data-filter=".filter-band">Band</li>
+        </ul>
+
+        <div class="row gy-4 isotope-container" data-aos="fade-up" data-aos-delay="300">
+          {% for item in portfolio_items %}
+          <div class="col-lg-4 col-md-6 portfolio-item isotope-item filter-{{ item.category }}">
+            <div class="portfolio-card">
+              <div class="portfolio-image-container">
+                <img src="{{ item.image.url }}" alt="{{ item.title }}" class="img-fluid" loading="lazy">
+                <div class="portfolio-overlay">
+                  <div class="portfolio-info">
+                    <span class="project-category">{{ item.get_category_display }}</span>
+                    <h4>{{ item.title }}</h4>
+                  </div>
+                  <div class="portfolio-actions">
+                    <a href="{{ item.image.url }}" class="glightbox portfolio-link">
+                      <i class="bi bi-plus-lg"></i>
+                    </a>
+                    {% if item.link %}
+                    <a href="{{ item.link }}" class="portfolio-details">
+                      <i class="bi bi-arrow-right"></i>
+                    </a>
+                    {% endif %}
+                  </div>
+                </div>
+              </div>
+              <div class="portfolio-meta">
+                <div class="project-tags">
+                  {% for tag in item.tags_list %}
+                  <span class="tag">{{ tag }}</span>
+                  {% endfor %}
+                </div>
+                <div class="project-year">{{ item.year }}</div>
+              </div>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+
+      </div>
+
+      <div class="portfolio-bottom" data-aos="fade-up" data-aos-delay="400">
+        <div class="row align-items-center">
+          <div class="col-lg-8">
+            <h3>Like what you see?</h3>
+            <p>Donec rutrum congue leo eget malesuada. Vivamus suscipit tortor eget felis porttitor volutpat.</p>
+          </div>
+          <div class="col-lg-4 text-lg-end">
+            <a href="#contact" class="btn btn-accent">Let's Work Together</a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+  </section><!-- /Portfolio Section -->
+
+  <!-- Contact Section -->
+  <section id="contact" class="contact section">
+
+    <!-- Section Title -->
+    <div class="container section-title" data-aos="fade-up">
+      <span class="subtitle">Contact</span>
+      <h2>Contact</h2>
+      <p>Necessitatibus eius consequatur ex aliquid fuga eum quidem sint consectetur velit. Sed ut perspiciatis unde
+        omnis iste natus error sit voluptatem accusantium doloremque laudantium totam rem aperiam</p>
+    </div><!-- End Section Title -->
+
+    <div class="container">
+
+      <div class="row gy-4">
+
+        <div class="col-lg-4">
+          <div class="info-item">
+            <div class="icon-wrapper">
+              <i class="bi bi-geo-alt"></i>
+            </div>
+            <div>
+              <h3>Address</h3>
+              <p>{{ profile.location }}</p>
+            </div>
+          </div>
+
+          <div class="info-item">
+            <div class="icon-wrapper">
+              <i class="bi bi-telephone"></i>
+            </div>
+            <div>
+              <h3>Call Me</h3>
+              <p>{{ profile.phone }}</p>
+            </div>
+          </div>
+
+          <div class="info-item">
+            <div class="icon-wrapper">
+              <i class="bi bi-envelope"></i>
+            </div>
+            <div>
+              <h3>Email Me</h3>
+              <p>{{ profile.email }}</p>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="col-lg-8">
+          <form method="post" class="php-email-form">
+            {% csrf_token %}
+            <div class="row gy-4">
+
+              <div class="col-md-6">
+                {{ contact_form.name.label_tag }}
+                {{ contact_form.name }}
+                {{ contact_form.name.errors }}
+              </div>
+
+              <div class="col-md-6">
+                {{ contact_form.email.label_tag }}
+                {{ contact_form.email }}
+                {{ contact_form.email.errors }}
+              </div>
+
+              <div class="col-md-12">
+                {{ contact_form.subject.label_tag }}
+                {{ contact_form.subject }}
+                {{ contact_form.subject.errors }}
+              </div>
+
+              <div class="col-md-12">
+                {{ contact_form.message.label_tag }}
+                {{ contact_form.message }}
+                {{ contact_form.message.errors }}
+              </div>
+
+
+              <div class="col-md-12 text-center">
+                {% if messages %}
+                {% for message in messages %}
+                <div class="alert alert-success">{{ message }}</div>
+                {% endfor %}
+                {% endif %}
+                <button type="submit">Send Message</button>
+              </div>
+
+            </div>
+          </form>
+        </div>
+
+      </div>
+
+    </div>
+
+  </section><!-- /Contact Section -->
+
+</main>
+
+{% endblock %}
+
+
+<!-- oluwaseyioluwagbenga2001@gmail.com
+09078368654
+oluwagbenga2001 -->
